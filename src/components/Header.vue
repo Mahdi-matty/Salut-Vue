@@ -4,12 +4,9 @@
     </header>
 </template>
 
-<script>
+<script setup>
 
-export default {
-   name: 'Header',
-   props: {
+const props = defineProps({
     title: String
-   }
-}
+})
 </script>

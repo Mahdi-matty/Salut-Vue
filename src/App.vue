@@ -4,20 +4,21 @@
   <header>
     <div class="wrapper">
       <Header title='Task tracker'/>
-      <Button />
-      <Tasks :tasks="tasks" />
+      <Button @click="handleClickBtn()"/>
+      <Tasks @toggle-reminder="toggleReminder" :tasks="tasks" />
     </div>
   </header>
   </div>
 </template>
 
 <script setup >
+import {ref} from 'vue'
 import Header from './components/Header.vue'
 import NavBar from './components/NavBar.vue'
 import Button from './components/Button.vue'
 import Tasks from './components/Tasks.vue'
  
-const tasks = [
+const tasks = ref([
   {
     id: 1,
     text: 'goldon',
@@ -36,7 +37,14 @@ const tasks = [
     reminder: false,
     day: "March 28th"
   },
-];
+]);
+const handleClickBtn = ()=>{
+  console.log('button clicked')
+}
+
+const toggleReminder = (id)=>{
+ tasks.value= tasks.value.map((task)=> task.id == id ? {...task, reminder: !task.reminder}: task)
+}
 
 </script>
 
