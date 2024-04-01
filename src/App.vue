@@ -4,7 +4,8 @@
   <header>
     <div class="wrapper">
       <Header title='Task tracker'/>
-      <Button @click="handleClickBtn()"/>
+      <Button title='Add new Task'/>
+      <Forum @handleObject="addNewTask"/>
       <Tasks @toggle-reminder="toggleReminder" :tasks="tasks" />
     </div>
   </header>
@@ -17,6 +18,7 @@ import Header from './components/Header.vue'
 import NavBar from './components/NavBar.vue'
 import Button from './components/Button.vue'
 import Tasks from './components/Tasks.vue'
+import Forum from './components/Forum.vue'
  
 const tasks = ref([
   {
@@ -38,12 +40,13 @@ const tasks = ref([
     day: "March 28th"
   },
 ]);
-const handleClickBtn = ()=>{
-  console.log('button clicked')
-}
 
 const toggleReminder = (id)=>{
  tasks.value= tasks.value.map((task)=> task.id == id ? {...task, reminder: !task.reminder}: task)
+}
+
+const addNewTask = (userObj)=>{
+  tasks.value = [...tasks.value, userObj]
 }
 
 </script>

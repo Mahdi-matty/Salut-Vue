@@ -1,14 +1,11 @@
-<script>
-    export default{
-        name: 'Butoon' ,
-        methods : {
-            createItem(){
-                this.$emit('click')
-            }
-        }
-    }
-</script>
-
 <template>
-    <button @click="createItem()">Add item</button>
+    <button @click="$emit('handleClick')">{{title}}</button>
 </template>
+
+
+<script setup>
+const props =defineProps({
+    title: String
+})
+   
+</script>
