@@ -4,8 +4,10 @@
   <header>
     <div class="wrapper">
       <Header title='Task tracker'/>
-      <Button title='Add new Task'/>
-      <Forum @handleObject="addNewTask"/>
+      <Button :showForm="showAddForm" @handleClick="showDiv"/>
+      <div v-show="showAddForm">
+         <Forum @handleObject="addNewTask"/>
+      </div>
       <Tasks @toggle-reminder="toggleReminder" :tasks="tasks" />
     </div>
   </header>
@@ -19,6 +21,11 @@ import NavBar from './components/NavBar.vue'
 import Button from './components/Button.vue'
 import Tasks from './components/Tasks.vue'
 import Forum from './components/Forum.vue'
+
+const showAddForm = ref(false)
+const showDiv = ()=>{
+  showAddForm.value = !showAddForm.value
+}
  
 const tasks = ref([
   {
