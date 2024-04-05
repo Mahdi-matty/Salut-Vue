@@ -4,11 +4,6 @@
   <header>
     <div class="wrapper">
       <Header title='Task tracker'/>
-      <Button :showForm="showAddForm" @handleClick="showDiv"/>
-      <div v-show="showAddForm">
-         <Forum @handleObject="addNewTask"/>
-      </div>
-      <Tasks @toggle-reminder="toggleReminder" :tasks="tasks" />
     </div>
   </header>
   </div>
@@ -16,11 +11,9 @@
 
 <script setup >
 import {ref} from 'vue'
-import Header from './components/Header.vue'
+
 import NavBar from './components/NavBar.vue'
-import Button from './components/Button.vue'
-import Tasks from './components/Tasks.vue'
-import Forum from './components/Forum.vue'
+
 
 const showAddForm = ref(false)
 const showDiv = ()=>{

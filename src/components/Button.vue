@@ -1,16 +1,15 @@
 <template>
-    <button @click="$emit('handleClick')">{{buttonText}}</button>
+    <button @click="$emit('handleClick')">{{title}}</button>
 </template>
 
 
 <script setup>
 import {computed} from 'vue'
 const props =defineProps({
-    showForm: Boolean
+    title: String
 })
 // it is not optimal since components should be reusable
-const buttonText = computed(()=>{
-    return props.showForm ? "close form " : "show form"
-})
+
+
    
 </script>
