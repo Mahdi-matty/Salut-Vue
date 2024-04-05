@@ -1,33 +1,49 @@
 <template>
-  <form>
-    <input 
-    v-model="userName"
-    placeholder="choose a userName"/>
-    <input 
-    v-model="password"
-    placeholder="enter a password"/>
-    <input 
-    v-model="email"
-    placeholder="enter your email address"/>
-    <Button :buttonText = "'singup'" :handleClick = "signUpFunction"/>
-  </form>
+  <div>
+    <form @submit.prevent="handleSubmit">
+      <label>userName</label>
+      <input
+        v-model="username"
+        type="text"
+        name="username"
+        placeholder="enter a username"
+      />
+      <label>email</label>
+      <input
+        v-model="email"
+        type="text"
+        name="email"
+        placeholder="enter your email address"
+      />
+      <label>password</label>
+      <input type="password" v-model="password" name="set a password" />
+      <input type="submit" value="save " />
+    </form>
+  </div>
 </template>
 
-
 <script setup>
-import { ref } from 'vue'
-import Button from './Button.vue'
+import { ref, defineEmits } from "vue";
+import { useMutation } from "@vue/apollo-composable";
+import { ADD_USER } from "../utils/mutations";
+const { mutate } = useMutation(LOGIN);
+const username = ref("");
+const email = ref("");
+const password = ref("");
 
-const userName = ref('')
-const password = ref('')
-const email = ref('')
-
-const signUpFunction = ()=>{
-    const userObj = {
-        username: userName.value,
-        password: password.value,
-        email:email.value
-    }
-}
-
+const emit = defineEmits(['handleUserSignup'])
+const handleSubmit = async () => {
+  try {
+    const { data } = await mutate({
+      username: username.value,
+      email: email.value,
+      password: password.value,
+    });
+    const { token, user } = data.addUser;
+    console.log("Login successful. Token:", token, "User:", user);
+    emit("handleUserSignup", { token, user });
+  } catch (error) {
+    console.error("Login failed:", error.message);
+  }
+};
 </script>
