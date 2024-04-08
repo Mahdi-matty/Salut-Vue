@@ -2,7 +2,7 @@
     <form @submit.prevent="handleLogin">
         <label>userName</label>
         <input
-        v-model="userName"
+        v-model="username"
         placeholder="enter userName" />
         <label>password</label>
         <input 
@@ -21,18 +21,20 @@ import { LOGIN } from '../utils/mutations.js';
 const username = ref('')
 const password = ref('')
 
-const { mutate } = useMutation(LOGIN);
+const { mutate: login, onDone } = useMutation(LOGIN);
 const emit = defineEmits(['handleUserlogin'])
 
 const handleLogin = async () => {
   try {
-    const { data } = await mutate({ username: username.value, password: password.value });
-    const { token, user } = data.login;
-    localStorage.setItem('id_token', token)
+    const { data } = await login({ username: username.value, password: password.value });
+    onDone((data)=>{
+      console.log(data)
+    })
+    // localStorage.setItem('id_token', token)
 
-    console.log('Login successful. Token:', token, 'User:', user);
+    // console.log('Login successful. Token:', token, 'User:', user);
 
-    emit('handleUserlogin', { token, user }); 
+    // emit('handleUserlogin', { token, user }); 
   } catch (error) {
     console.error('Login failed:', error.message);
   }
