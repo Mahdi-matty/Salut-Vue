@@ -1,54 +1,13 @@
 <template>
     <div class="bodyWhole">
       <NavBar />
-  <header>
-    <div class="wrapper">
-      <Header title='Task tracker'/>
-    </div>
-  </header>
+      <router-view></router-view>
   </div>
 </template>
 
 <script setup >
-import {ref} from 'vue'
-
+import router from './router'
 import NavBar from './components/NavBar.vue'
-
-
-const showAddForm = ref(false)
-const showDiv = ()=>{
-  showAddForm.value = !showAddForm.value
-}
- 
-const tasks = ref([
-  {
-    id: 1,
-    text: 'goldon',
-    reminder: true,
-    day: "March 28th"
-  },
-  {
-    id: 2,
-    text: 'baghche',
-    reminder: true,
-    day: "March 29th"
-  },
-  {
-    id: 3,
-    text: 'iron',
-    reminder: false,
-    day: "March 28th"
-  },
-]);
-
-const toggleReminder = (id)=>{
- tasks.value= tasks.value.map((task)=> task.id == id ? {...task, reminder: !task.reminder}: task)
-}
-
-const addNewTask = (userObj)=>{
-  tasks.value = [...tasks.value, userObj]
-}
-
 </script>
 
 

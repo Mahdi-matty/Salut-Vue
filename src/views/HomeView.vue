@@ -13,16 +13,16 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import Login from "..components/Login.vue";
+import Login from "../components/Login.vue";
 import SignUp from "../components/SignUp.vue";
 import Button from "../components/Button.vue";
-import {router } from '../router'
+import router  from '../router'
 const showSignUp = ref(false)
 const handleSignDiv = ()=>{
     showSignUp.value = !showSignUp.value
 }
 const buttontitle = computed(()=>{
-    return showSignUp.value ? "Show Signup" : "Hide Signup";
+    return showSignUp.value ? "Hide Signup" : "Show Signup";
 })
 
 const userLogFunc = ({token, user})=>{
