@@ -26,7 +26,7 @@
 import { ref, defineEmits } from "vue";
 import { useMutation } from "@vue/apollo-composable";
 import { NEW_USER } from "../utils/mutations";
-const { mutate: addUSer, onDone } = useMutation(NEW_USER);
+const { mutate } = useMutation(NEW_USER);
 const username = ref("");
 const email = ref("");
 const password = ref("");
@@ -34,16 +34,15 @@ const password = ref("");
 const emit = defineEmits(['handleUserSignup'])
 const handleSubmit = async () => {
   try {
-    const { data } = await addUSer({
+    const { data } = await mutate({
       username: username.value,
       email: email.value,
       password: password.value,
     });
-    onDone((data)=>{
-      console.log(data)
-    })
-    // console.log("singup successful. Token:", token, "User:", user);
-    // emit("handleUserSignup", { token, user });
+    const {token, user} = data.addUser
+    
+    console.log("singup successful. Token:", token, "User:", user);
+    emit("handleUserSignup", { token, user });
   } catch (error) {
     console.error("signup failed:", error.message);
   }
