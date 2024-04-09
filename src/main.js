@@ -5,6 +5,7 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import App from './App.vue'
 import router from './router'
+import store from './store'
 
 
 const apolloClient = new ApolloClient({
@@ -20,6 +21,6 @@ const app = createApp({
 
   render: () => h(App),
 })
-
+app.use(store);
 app.use(router)
 app.mount('#app')

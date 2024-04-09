@@ -27,14 +27,12 @@ const emit = defineEmits(['handleUserlogin'])
 const handleLogin = async () => {
   try {
     const { data } = await login({ username: username.value, password: password.value });
-    onDone((data)=>{
-      console.log(data)
-    })
-    // localStorage.setItem('id_token', token)
+    const {token, user } = data.login
+    localStorage.setItem('idToken', token)
 
-    // console.log('Login successful. Token:', token, 'User:', user);
+    console.log('Login successful. Token:', token, 'User:', user);
 
-    // emit('handleUserlogin', { token, user }); 
+    emit('handleUserlogin', { token, user }); 
   } catch (error) {
     console.error('Login failed:', error.message);
   }

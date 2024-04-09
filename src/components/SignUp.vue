@@ -40,7 +40,8 @@ const handleSubmit = async () => {
       password: password.value,
     });
     const {token, user} = data.addUser
-    
+    localStorage.setItem('idToken', token)
+     store.commit('login', { token, user });
     console.log("singup successful. Token:", token, "User:", user);
     emit("handleUserSignup", { token, user });
   } catch (error) {

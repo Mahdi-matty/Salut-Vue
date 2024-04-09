@@ -37,6 +37,12 @@ query getUser($id: ID!) {
     }
 }
 `;
+export const QUERY_LOOGEDIN = gql`
+query loggedin($token: ID!){
+    loggedin(token: $token){
+        user
+    }
+}`
 
 export const QUERY_USERS = gql`
 query getUsers {
