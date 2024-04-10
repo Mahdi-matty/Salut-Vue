@@ -90,8 +90,8 @@ query getUserFollowing($userId : ID!) {
 `;
 
 export const QUERY_USER_SEARCH = gql`
-query getSearchUser($query: Stirng!) {
-    searchUser(query: $query){
+query getSearchUser($query: String!) {
+    searchUsers(query: $query){
         username
     }
 }`
