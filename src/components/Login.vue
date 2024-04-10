@@ -20,7 +20,8 @@ import { useMutation } from '@vue/apollo-composable';
 import { LOGIN } from '../utils/mutations.js';
 const username = ref('')
 const password = ref('')
-
+import { useStore } from "vuex";
+const store = useStore();
 const { mutate: login, onDone } = useMutation(LOGIN);
 const emit = defineEmits(['handleUserlogin'])
 
@@ -31,7 +32,7 @@ const handleLogin = async () => {
     localStorage.setItem('idToken', token)
 
     console.log('Login successful. Token:', token, 'User:', user);
-
+    store.commit('login', { token, user })
     emit('handleUserlogin', { token, user }); 
   } catch (error) {
     console.error('Login failed:', error.message);
