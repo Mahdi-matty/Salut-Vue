@@ -6,11 +6,21 @@ query getPosts{
         title,
         content,
         imageSource,
-        userId
+        userId,
+        comments {
+            text,
+            userId,
+            postId
+        },
+        likes{
+            status,
+            userId,
+            postId
+        }
     }
 }
 `;
-export const QUERY_PRODUCT = gql`
+export const QUERY_SINGLE_POST = gql`
 query getPost($id: ID!) {
     post(id: $id) {
         id,
@@ -90,8 +100,20 @@ query getUserFollowing($userId : ID!) {
 `;
 
 export const QUERY_USER_SEARCH = gql`
-query getSearchUser($query: String!) {
-    searchUsers(query: $query){
+query getSearchUser($username: String!) {
+    searchUsers(username: $username){
         username
+        id
     }
 }`
+export const QUERY_LIKES = gql`
+query likes($postId: ID!){
+    likes(potId: $postId){
+       likes{
+        id,
+        userId,
+        status
+       }
+    }
+}
+`;
