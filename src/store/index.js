@@ -11,11 +11,19 @@ const store = createStore({
       state.isLoggedIn = true;
       state.user = user;
       state.token = token;
+      localStorage.setItem('user', JSON.stringify(user));
     },
     logout(state) {
       state.isLoggedIn = false;
       state.user = null;
       state.token = null;
+      localStorage.removeItem('idToken');
+      localStorage.removeItem('user');
+    }
+  },
+  getters: {
+    selfUserId(state) {
+      return state.user ? state.user.id : null;
     }
   },
   actions: {

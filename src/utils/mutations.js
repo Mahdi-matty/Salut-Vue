@@ -24,7 +24,7 @@ mutation login($username: String!, $password: String!){
 }
 `;
 export const ADD_POST = gql`
-mutation addPost($title: String!, $content: String!, $imageSource: String!, $userId: ID!){
+mutation addPost($title: String!, $content: String!, $imageSource: String, $userId: ID!){
     addPost(title: $title, content: $content, imageSource: $imageSource, userId: $userId){
         id
         title
@@ -44,38 +44,8 @@ mutation deletePost($id: ID!, $userId: ID!){
 `;
 
 export const EDIT_POST = gql`
-mutation editPost($id: ID!, $title: String!, $content: String!, $imageSource: String!, $userId: ID!){
+mutation editPost($id: ID!, $title: String, $content: String, $imageSource: String, $userId: ID!){
     editPost(id: $id, title: $title, content: $content, imageSource: $imageSource, userId: $userId){
-        id
-        title
-        content
-        imageSource
-    }
-}
-`;
-export const EDIT_POST_TITLE = gql`
-mutation editPost($id: ID!, $title: String!, $userId: ID!){
-    editPost(id: $id, title: $title, userId: $userId){
-        id
-        title
-        content
-        imageSource
-    }
-}
-`;
-export const EDIT_POST_CONTENT = gql`
-mutation editPost($id: ID!,  $content: String!,$userId: ID!){
-    editPost(id: $id,content: $content,userId: $userId){
-        id
-        title
-        content
-        imageSource
-    }
-}
-`;
-export const EDIT_POST_IMAGE = gql`
-mutation editPost($id: ID!, $imageSource: String!, $userId: ID!){
-    editPost(id: $id, imageSource: $imageSource, userId: $userId){
         id
         title
         content
@@ -137,9 +107,9 @@ mutation addLike($status: Boolean!, $userId: ID!, $postId: ID!){
 }
 `;
 export const REMOVE_LIKE = gql`
-mutation removeLike($id: ID!, $userId: ID!){
-    removeLike(id: $id, userId: $userId){
-        success
-        message
+mutation removeLike($status: Boolean!, $id: ID!, $userId: ID!){
+    removeLike(status: $status, id: $id, userId: $userId){
+        id
+        status
     }
 }`
