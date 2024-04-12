@@ -13,6 +13,11 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: () => import('../views/Profile.vue')
+    },
+    {
+      path: '/notmess',
+      name: 'notification',
+      component: () => import('../views/Detail.vue')
     }
   ]
 })

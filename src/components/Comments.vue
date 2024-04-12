@@ -13,7 +13,7 @@
       value="save"/>
     </form>
   </div>
-  <div v-if="comments.length !== 0">
+  <div v-if="comments !== null && comments.length !== 0">
     <div v-for="comment in comments" :key="comment.id">
       <ul>
         <li>{{ comment.text }}</li>
@@ -28,7 +28,7 @@
 
 <script setup>
 import Button  from './Button.vue'
-import { ref, defineEmits } from "vue";
+import { ref, defineEmits, computed } from "vue";
 import { useStore } from "vuex";
 import {REMOVE_COMMENT, ADD_COMMENT} from '../utils/mutations'
 import { useMutation } from "@vue/apollo-composable";
@@ -60,9 +60,10 @@ const handleRemoveComment = async (comment)=>{
 
 }
 const handleSubmit = async()=>{
+  const userId= selfUserId.value
   try{
     const {data} = await AddComment({
-      userId: selfUserId,
+      userId,
       text: text.value,
       postId: props.postId
     })
