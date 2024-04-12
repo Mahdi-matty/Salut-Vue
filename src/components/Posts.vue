@@ -6,9 +6,9 @@
           <h3>{{ post.title }}</h3>
           <p>{{ post.content }}</p>
           <img :src="post.imageSource" />
-          <Comments :comments="post.comments" :postId="post.id"/>
+          <Comments :comments="post.comments" :postId="parseInt(post.id)" />
           <i
-            v-if="post.userId === tUserId"
+            v-if="post.userId === selfUserId"
             :handleClick="handleDeletePost(post)"
             class="fa-solid fa-xmark"
           ></i>
@@ -18,7 +18,7 @@
             @click="toggleLike(post)"
           ></i>
           <Button
-            v-if="post.userId === tUserId"
+            v-if="post.userId === selfUserId"
             @handleClick="handleEditPost(post)"
             title="edit post"
           />
@@ -53,9 +53,17 @@
 <script setup>
 import "@fortawesome/fontawesome-free/css/all.css";
 import { useQuery, useMutation } from "@vue/apollo-composable";
-import { ref, defineEmits, onMounted, computed, reactive } from "vue";
-import { QUERY_POSTS } from "../utils/queries";
-import Comments from './Comments.vue'
+import {
+  ref,
+  defineEmits,
+  onMounted,
+  watchEffect,
+  computed,
+  reactive,
+} from "vue";
+import { QUERY_POSTS, QUERY_LIKES } from "../utils/queries";
+import Comments from "./Comments.vue";
+import PostForm from "./PostForm.vue";
 import {
   EDIT_POST,
   DELETE_POST,
@@ -85,6 +93,7 @@ const handleDeletePost = async (post) => {
   }
 };
 const handleEditPost = (post) => {
+  editedPost.id = post.id;
   editedPost.title = post.title;
   editedPost.content = post.content;
   editedPost.imageSource = post.imageSource;
@@ -108,10 +117,13 @@ const handleSaveEdit = async () => {
     console.error("Error editing post:", error);
   }
 };
-onMounted(async () => {
+const { result: queryResult } = useQuery(QUERY_POSTS);
+watchEffect(async () => {
   try {
-    const { data } = await useQuery(QUERY_POSTS);
-    posts.value = data.posts;
+    if (queryResult.value) {
+      console.log(queryResult.value);
+      posts.value = await queryResult.value.posts;
+    }
   } catch (error) {
     console.log(error);
   }
@@ -119,12 +131,26 @@ onMounted(async () => {
 
 const toggleLike = async (post) => {
   try {
-    await LikePosts({
-      status: liked,
-      userId: selfUserId,
-      postId: post.id,
-    });
-    post.liked = !post.liked; // Toggle liked state
+    const { result } = useQuery(QUERY_LIKES, () => ({ postId: post.id }));
+    const postLikes = await result.likes;
+    const alreadyLiked = postLikes.some(like => like.userId === selfUserId);
+    if (!alreadyLiked) {
+      await LikePosts({
+        status: "liked",
+        userId: selfUserId,
+        postId: post.id,
+      });
+    }else{
+      const userLike = postLikes.find(like => like.userId === selfUserId);
+      if(userLike){
+         await DisLikePosts({
+        userId: selfUserId,
+        id:userLike.id
+      })
+      }
+     
+    }
+
   } catch (error) {
     console.error("Error toggling like:", error);
   }

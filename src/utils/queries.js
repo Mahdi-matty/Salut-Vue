@@ -108,11 +108,24 @@ query getSearchUser($username: String!) {
 }`
 export const QUERY_LIKES = gql`
 query likes($postId: ID!){
-    likes(potId: $postId){
+    likes(postId: $postId){
        likes{
         id,
         userId,
         status
+       }
+    }
+}
+`;
+
+export const QUERY_MESSAGES = gql`
+query messages($senderId: ID!){
+    messages(senderId: $senderId){
+       messages{
+        id,
+        text,
+        senderId,
+        reciverId
        }
     }
 }

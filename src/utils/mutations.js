@@ -54,8 +54,8 @@ mutation editPost($id: ID!, $title: String, $content: String, $imageSource: Stri
 }
 `;
 export const ADD_COMMENT = gql`
-mutation addPost($text: String!, $userId: ID!, $postId: ID!){
-    addPost(text: $text,userId: $userId, postId: $postId){
+mutation addComment($text: String!, $userId: ID!, $postId: ID!){
+    addComment(text: $text,userId: $userId, postId: $postId){
         id
         text
         postId        
@@ -108,8 +108,19 @@ mutation addLike($status: Boolean!, $userId: ID!, $postId: ID!){
 `;
 export const REMOVE_LIKE = gql`
 mutation removeLike($status: Boolean!, $id: ID!, $userId: ID!){
-    removeLike(status: $status, id: $id, userId: $userId){
-        id
-        status
+    removeLike(id: $id, userId: $userId){
+        message
+    }
+}`
+
+export const SEND_MESSAGES = gql`
+mutation sendMessage($text: String!, senderId: ID!, reciverId: ID!){
+    sendMessage(text: $text, senderId: $senderId, reciverId: $reciverId!){
+        message{
+            id,
+            text,
+            senderId,
+            reciverId
+        }
     }
 }`

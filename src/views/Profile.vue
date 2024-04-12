@@ -6,7 +6,7 @@
     <div>
       <Button @handleClick="showFormDev" title="Add new post" />
       <div v-show="showAddForm">
-        <PostForm  />
+        <PostForm :isEditMode="false"  @handleFormRegister = "handleAddPost" />
       </div>
       <div>
         <Posts />
@@ -30,6 +30,9 @@ import Posts from "../components/Posts.vue";
 import Button from "../components/Button.vue";
 const store = useStore();
 const showAddForm = ref(false);
+import { ADD_POST } from "../utils/mutations";
+import { useMutation } from "@vue/apollo-composable";
+const { mutate } = useMutation(ADD_POST);
 const showFormDev = () => {
   showAddForm.value = !showAddForm.value;
 };
@@ -43,4 +46,33 @@ onMounted(() => {
 const isLoggedIn = computed(() => store.state.isLoggedIn);
 const user = computed(() => store.state.user);
 const selfUserId = computed(() => store.getters.userId);
+
+const handleAddPost = (fomrObject, selectedFile)=>{
+    try {
+      const { title, content, imageSource } = fomrObject
+    if (selectedFile != null) {
+      const { data } = mutate({
+        title,
+        content,
+        imageSource,
+        userId: selfUserId,
+      });
+      const result = data.ADD_POST;
+      console.log(result);
+      title.value = "";
+    content.value = "";
+    selectedFile.value = null;
+    imageSource.value="";
+    }
+    const { data } = mutate({
+      title: title.value,
+      content: content.value,
+      userId: selfUserId,
+    });
+    const result = data.ADD_POST;
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+}
 </script>
