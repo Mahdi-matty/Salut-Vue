@@ -97,8 +97,8 @@ mutation removeFollow($followingUserId: ID!, $id: ID!){
 }
 `;
 export const ADD_LIKE = gql`
-mutation addLike($status: Boolean!, $userId: ID!, $postId: ID!){
-    addLike(status: $status,userId: $userId, postId: $postId){
+mutation addLike($status: LikeStatus!, $userId: ID!, $postId: ID!){
+    addLike(status: $status, userId: $userId, postId: $postId){
         id
         status
         userId
@@ -107,20 +107,28 @@ mutation addLike($status: Boolean!, $userId: ID!, $postId: ID!){
 }
 `;
 export const REMOVE_LIKE = gql`
-mutation removeLike($status: Boolean!, $id: ID!, $userId: ID!){
+mutation removeLike( $id: ID!, $userId: ID!){
     removeLike(id: $id, userId: $userId){
         message
     }
 }`
 
 export const SEND_MESSAGES = gql`
-mutation sendMessage($text: String!, senderId: ID!, reciverId: ID!){
-    sendMessage(text: $text, senderId: $senderId, reciverId: $reciverId!){
-        message{
-            id,
+mutation sendMessage($text: String!, $senderId: ID!, $reciverId: ID!){
+    sendMessage(text: $text, senderId: $senderId, reciverId: $reciverId){
+        newMsg{
             text,
-            senderId,
+            id,
             reciverId
         }
     }
 }`
+
+export const ADD_Notif=gql`
+mutation addNotif($message: String!, $status: NotificationStatus!, $userId: ID! ){
+    addNotif(message: $message, status: $status, userId: $userId){
+        id
+        status
+        message
+    }
+}`;

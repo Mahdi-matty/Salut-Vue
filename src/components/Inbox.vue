@@ -11,8 +11,8 @@
     </div>
     <Button @handleClick="handleShowSendForm" title="send a message"/>
     <div v-show="showSendForm">
-        <Seachbar />
-        <from>
+        <Seachbar :FollowMode="false" @userInfo="handleUserInfo"/>
+        <from @submit.prevent="handleSendMess">
             <label>text</label>
             <input 
             type="text"
@@ -24,18 +24,45 @@
 </template>
 
 <script setup>
-import { SEND_MESSAGES } from "../utils/mutations";
+import { SEND_MESSAGES, ADD_Notif } from "../utils/mutations";
 import { QUERY_MESSAGES } from "../utils/queries";
 import { useQuery, useMutation } from "@vue/apollo-composable";
 import { useStore } from "vuex";
 import Button from './Button.vue'
 import Searchbar from './Searchbar.vue'
+import Notification from './Notification.vue'
 import { ref, defineEmits, onMounted, watchEffect, computed } from "vue";
 const store = useStore();
+const reciverId = ref('')
+const text = ref('')
+const handleUserInfo = (userInfo)=>{
+reciverId.value= userInfo.UserId
+}
 const selfUserId = computed(() => store.getters.selfUserId);
-const { mutate } = useMutation(SEND_MESSAGES);
-const { result: queryResult } = useQuery(QUERY_MESSAGES);
+const { mutate: sendMess } = useMutation(SEND_MESSAGES);
+const { mutate: sendNot } = useMutation(ADD_Notif);
+const { result: queryResult } = useQuery(QUERY_MESSAGES, ()=>({senderId: selfUserId}));
 const allMessages = ref([]);
+const handleSendMess = async()=>{
+  try{
+    const newMsg = await sendMess({
+      text :text.value,
+      senderId: selfUserId,
+      reciverId: reciverId.value 
+    })
+    console.log(newMsg)
+    if(newMsg){
+      const newNote = await sendNot({
+        UserId: reciverId.value,
+        message: "new Message",
+        status: "unread"
+      })
+      console.log(newNote)
+    }
+  }catch(error){
+    console.log(error)
+  }
+}
 watchEffect(async () => {
   try {
     if (queryResult.value) {
@@ -48,6 +75,6 @@ watchEffect(async () => {
 });
 const showSendForm= ref(false)
 const handleShowSendForm = ()=>{
-    showSendFrom.value = !showSendFrom.value
+    showSendForm.value = !showSendForm.value
 }
 </script>

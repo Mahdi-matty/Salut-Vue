@@ -94,6 +94,7 @@ query getUserFollowers($userId : ID!) {
 export const QUERY_USER_FOLLOWING= gql`
 query getUserFollowing($userId : ID!) {
     userFollowing(userId: $userId) {
+        id
         username
     }
 }
@@ -130,3 +131,14 @@ query messages($senderId: ID!){
     }
 }
 `;
+
+export const QUERY_NOTIFICATION = gql`
+query userNotif($userId: ID!){
+    userNotif(userId: $userId){
+        notifications{
+            userId,
+            message,
+            status
+        }
+    }
+}`

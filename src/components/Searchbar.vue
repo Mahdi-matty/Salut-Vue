@@ -4,10 +4,13 @@
       <input type="text" v-model="username" placeholder="Search" />
       <Button @handleClick="searchUsernames" title="Search" />
     </div>
-    <div v-show="showResDev">
+    <div v-if="FollowMode" v-show="showResDev">
       {{ userName }}{{ followedUserId }}
       <Button @handleClick="followUser" title="follow" />
       <Button @handleClick="unFollowUser" title="unfollow" />
+    </div>
+    <div v-else>
+      {{ userName }}{{ followedUserId }}
     </div>
   </div>
 </template>
@@ -21,15 +24,18 @@ import Button from "./Button.vue";
 import { useStore } from "vuex";
 const store = useStore();
 const selfUserId = computed(() => store.getters.selfUserId);
-import { ref, defineEmits, watchEffect, computed } from "vue";
+import { ref, defineEmits, defineProps, watchEffect, computed } from "vue";
 const showResDev = ref(false);
-
+const props =defineProps({
+    FollowMode: Boolean
+})
 const username = ref("");
 const userName = ref("");
 const followedUserId = ref("");
 const {result, refetch } =   useQuery(QUERY_USER_SEARCH, ()=>({username: username.value,}))
 const { mutate: addFollow } = useMutation(ADD_FOLLOW);
 const { mutate: removeFollows } = useMutation(REMOVE_FOLLOW);
+const emit = defineEmits(['userInfo'])
 const searchUsernames = async () => {
   showResDev.value = !showResDev.value;
   try {
@@ -37,6 +43,7 @@ const searchUsernames = async () => {
       const user = result.value.searchUsers
       userName.value = user.username
       followedUserId.value = user.id;
+      emit('userInfo', {userName: user.username, UserId: user.id})
     } catch (error) {
     console.error(error);
   }

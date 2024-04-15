@@ -1,7 +1,7 @@
 <template>
   <div v-if="isLoggedIn">
     <div>
-      <Searchbar  />
+      <Searchbar  :FollowMode="true"/>
     </div>
     <div>
       <Button @handleClick="showFormDev" title="Add new post" />
