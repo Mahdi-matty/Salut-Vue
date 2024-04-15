@@ -51,7 +51,6 @@
 </template>
 
 <script setup>
-import "@fortawesome/fontawesome-free/css/all.css";
 import { useQuery, useMutation } from "@vue/apollo-composable";
 import {
   ref,
