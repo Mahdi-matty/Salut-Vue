@@ -5,8 +5,8 @@ import { RouterLink } from 'vue-router'
 
 
 <template>
-    <div>
-        <RouterLink to="/">Home</RouterLink>
+    <div >
+        <RouterLink  to="/">Home</RouterLink>
         <RouterLink to="/profile">Profile</RouterLink>
 
     </div>
@@ -17,7 +17,6 @@ import { RouterLink } from 'vue-router'
  div{
     top: 0px;
     widows: 100%;
-    background-color: aqua;
  }
 
  a.router-link{

@@ -3,20 +3,20 @@
     <div v-for="post in posts" :key="post.id">
       <ul>
         <li>
-          <h3>{{ post.title }}</h3>
-          <p>{{ post.content }}</p>
+          <h3 class="text-white">{{ post.title }}</h3>
+          <p class="text-white">{{ post.content }}</p>
           <img :src="post.imageSource" />
           <Comments :comments="post.comments" :postId="parseInt(post.id)" />
-          <i
+          <TrashIcon
             v-if="post.userId === selfUserId"
-            :handleClick="handleDeletePost(post)"
-            class="fa-solid fa-xmark"
-          ></i>
-          <i
-            class="fa-solid fa-heart"
+            class="h-6 w-6"
+            @click="handleDeletePost(post)"
+          />
+          <HeartIcon
+          class="w-6 h-6"
             :class="{ liked: post.liked }"
             @click="toggleLike(post)"
-          ></i>
+          />
           <Button
             v-if="post.userId === selfUserId"
             @handleClick="handleEditPost(post)"
@@ -51,6 +51,7 @@
 </template>
 
 <script setup>
+import { TrashIcon, HeartIcon } from '@heroicons/vue/outline'
 import { useQuery, useMutation } from "@vue/apollo-composable";
 import {
   ref,

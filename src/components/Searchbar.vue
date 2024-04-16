@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <input type="text" v-model="username" placeholder="Search" />
+      <input class="border-blue-50 border-4 p-2 my-4 w-60 rounded-1xl" type="text" v-model="username" placeholder="Search" />
       <Button @handleClick="searchUsernames" title="Search" />
     </div>
     <div v-if="FollowMode" v-show="showResDev">

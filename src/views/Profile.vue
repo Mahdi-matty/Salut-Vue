@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isLoggedIn">
+  <div class="ml-6" v-if="isLoggedIn">
     <div>
       <Searchbar  :FollowMode="true"/>
     </div>
