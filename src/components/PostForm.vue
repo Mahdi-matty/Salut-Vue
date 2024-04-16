@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="inline-flex flex-col">
     <form @submit.prevent="handleSubmit">
       <label>Title</label>
       <input

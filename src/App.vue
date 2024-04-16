@@ -1,5 +1,5 @@
 <template>
-    <div class="bodyWhole">
+    <div class="bodyWhole bg-black h-5">
       <NavBar />
       <router-view></router-view>
   </div>
@@ -14,7 +14,7 @@ import NavBar from './components/NavBar.vue'
 
 <style scoped>
 .bodyWhole{
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 }
 header {

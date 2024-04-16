@@ -1,5 +1,5 @@
 <template>
-    <button @click="$emit('handleClick')">{{title}}</button>
+    <button class="bg-yellow-300 w-40 h-10 rounded-3xl m-4" @click="$emit('handleClick')">{{title}}</button>
 </template>
 
 

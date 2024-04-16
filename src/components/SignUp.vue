@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <form @submit.prevent="handleSubmit">
+  <div class="inline-flex flex-col text-white">
+    <form class="inline-flex flex-col focus-within:text-green-600 mt-10 ml-28" @submit.prevent="handleSubmit">
       <label>userName</label>
       <input
+      class="border-blue-50 border-4 p-2 my-4 w-60"
         v-model="username"
         type="text"
         name="username"
@@ -10,14 +11,15 @@
       />
       <label>email</label>
       <input
+      class="border-blue-50 border-4 p-2 my-4 w-60"
         v-model="email"
         type="text"
         name="email"
         placeholder="enter your email address"
       />
       <label>password</label>
-      <input type="password" v-model="password" name="set a password" />
-      <input type="submit" value="save " />
+      <input class="border-blue-50 border-4 p-2 my-4 w-60" type="password" v-model="password" placeholder="set a password" />
+      <input class="border-blue-50 border-4 p-2 my-4 w-60" type="submit" value="save " />
     </form>
   </div>
 </template>

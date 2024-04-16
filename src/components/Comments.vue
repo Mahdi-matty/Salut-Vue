@@ -16,7 +16,7 @@
   <div v-if="comments !== null && comments.length !== 0">
     <div v-for="comment in comments" :key="comment.id">
       <ul>
-        <li>{{ comment.text }}</li>
+        <li class="text-white">{{ comment.text }}</li>
         <Button @handleClick="handleRemoveComment(comment)" title="removeComment"/>
       </ul>
     </div>

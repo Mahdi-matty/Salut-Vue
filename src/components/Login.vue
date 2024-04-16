@@ -1,17 +1,23 @@
 <template>
-    <form @submit.prevent="handleLogin">
-        <label>userName</label>
+  <div class="inline-flex flex-col text-white">
+    <form class="inline-flex flex-col focus-within:text-green-600 mt-10 ml-28 loginForm" @submit.prevent="handleLogin">
+        <label class="my-1">userName</label>
         <input
+        class="border-blue-50 border-4 p-2 my-4 w-60"
         v-model="username"
         placeholder="enter userName" />
-        <label>password</label>
-        <input 
+        <label class="my-1">password</label>
+        <input
+        class="border-blue-50 border-4 p-2 my-4" 
         v-model="password"
         placeholder="enter password"/>
         <input 
+        class="border-blue-50 border-4 p-2 my-6"
             type="submit"
             value="save "/>
     </form>
+  </div>
+    
 </template>
 
 <script setup>
@@ -39,3 +45,9 @@ const handleLogin = async () => {
   }
 };
 </script>
+
+<style scoped>
+.loginForm {
+height: 400px;
+}
+</style>

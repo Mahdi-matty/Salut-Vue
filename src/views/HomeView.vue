@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div v-show="!showSignUp" class="ml-16">
       <Login @handleUserlogin ="userLogFunc" />
     </div>
     <Button @handleClick = "handleSignDiv" :title = "buttontitle"/>
