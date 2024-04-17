@@ -1,15 +1,16 @@
 <template>
  <div>
-  <Button @handleClick="handleComDiv" title="add Comment"/>
-  <div v-show="showAddcomment">
+  <!-- <Button class="bg-yellow-300 w-15 h-10 rounded-3xl m-4" @handleClick="handleComDiv" title="add Comment"/> -->
+  <div>
     <form @submit.prevent="handleSubmit">
-      <label>text</label>
       <input 
+      class="border-blue-50 border-4 p-2 my-4 w-40"
       type="text"
       v-model="text"
       placeholder="enter your comment"
       name="text"/>
-      <input type="submit"
+      <input         class="border-blue-50 border-4 p-2 my-4 w-20"
+       type="submit"
       value="save"/>
     </form>
   </div>
@@ -41,10 +42,8 @@ const props =defineProps({
     comments: Array,
     postId: Number
 })
-const showAddcomment = ref(false)
-const handleComDiv = ()=>{
-  showAddcomment.value = !showAddcomment.value
-}
+
+
 const handleRemoveComment = async (comment)=>{
     if(comment.userId === selfUserId){
       try {

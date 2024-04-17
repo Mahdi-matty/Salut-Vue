@@ -2,12 +2,12 @@
   <div>
     <div v-for="post in posts" :key="post.id">
       <ul>
-        <li>
+        <li class="border-b border-white min-h-40">
           <h3 class="text-white">{{ post.title }}</h3>
           <p class="text-white">{{ post.content }}</p>
           <img :src="post.imageSource" />
-          <Comments :comments="post.comments" :postId="parseInt(post.id)" />
-          <TrashIcon
+          <div class="inline-flex flex-row">
+             <TrashIcon
             v-if="post.userId === selfUserId"
             class="h-6 w-6"
             @click="handleDeletePost(post)"
@@ -17,7 +17,12 @@
             :class="{ liked: post.liked }"
             @click="toggleLike(post)"
           />
+          <ChatIcon class="2-6 h-6" @click="handleCommentShow"/>
+          </div>
+         
+            <Comments v-show="showComment" :comments="post.comments" :postId="parseInt(post.id)" />
           <Button
+          class="bg-blue-300 w-20 h-10 rounded-3xl m-4"
             v-if="post.userId === selfUserId"
             @handleClick="handleEditPost(post)"
             title="edit post"
@@ -40,7 +45,7 @@
               />
               <label>image</label>
               <input type="file" @change="handleChange" name="imageSource" />
-              <Button @handleClick="handleUpload" title="upload" />
+              <Button class="bg-yellow-300 w-20 h-10 rounded-3xl m-4" @handleClick="handleUpload" title="upload" />
               <input type="submit" value="save " />
             </form>
           </div>
@@ -51,7 +56,7 @@
 </template>
 
 <script setup>
-import { TrashIcon, HeartIcon } from '@heroicons/vue/outline'
+import { TrashIcon, HeartIcon,ChatIcon} from '@heroicons/vue/outline'
 import { useQuery, useMutation } from "@vue/apollo-composable";
 import {
   ref,
@@ -80,7 +85,11 @@ import { useStore } from "vuex";
 const store = useStore();
 const posts = ref([]);
 const showEditDev = ref(false);
+const showComment = ref(false)
 const selfUserId = computed(() => store.getters.selfUserId);
+const handleCommentShow = ()=>{
+   showComment.value = !showComment.value
+}
 const handleDeletePost = async (post) => {
   try {
     const { data } = await Deletepost({
@@ -156,3 +165,5 @@ const toggleLike = async (post) => {
   }
 };
 </script>
+
+

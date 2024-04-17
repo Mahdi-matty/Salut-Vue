@@ -3,10 +3,14 @@
     <div>
       <Searchbar  :FollowMode="true"/>
     </div>
-    <div>
-      <Button @handleClick="showFormDev" title="Add new post" />
-      <div v-show="showAddForm">
+    <div class="relative">
+      <div class="fixed bottom-6 right-6">
+      <PlusSmIcon class="w-8 h-8 cursor-pointer" @Click="showFormDev" title="Add new post" />
+      </div>
+      <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50" v-show="showAddForm">
+        <div class="bg-white p-6 rounded-md">
         <PostForm :isEditMode="false"  @handleFormRegister = "handleAddPost" />
+        </div>
       </div>
       <div>
         <Posts />
@@ -21,6 +25,7 @@
 
 
 <script setup>
+import { PlusSmIcon } from '@heroicons/vue/outline'
 import { computed, onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { useStore } from "vuex";

@@ -3,7 +3,7 @@
     <div v-show="!showSignUp" class="ml-16">
       <Login @handleUserlogin ="userLogFunc" />
     </div>
-    <Button @handleClick = "handleSignDiv" :title = "buttontitle"/>
+    <Button class="bg-yellow-300 w-40 h-10 rounded-3xl m-4" @handleClick = "handleSignDiv" :title = "buttontitle"/>
     <div v-show="showSignUp">
       <SignUp @handleUserSignup ="userSignUp" />
     </div>
