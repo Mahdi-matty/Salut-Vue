@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-      <input class="border-blue-50 border-4 p-2 my-4 w-60 rounded-1xl" type="text" v-model="username" placeholder="Search" />
-      <Button @handleClick="searchUsernames" title="Search" />
+      <input class="border-blue-50 border-4 p-2 my-4 w-60 rounded-1xl" type="text" v-model="username" placeholder="Search users" />
+      <Button class="bg-yellow-300 w-40 h-10 rounded-3xl m-4" @handleClick="searchUsernames" title="Search" />
     </div>
     <div v-if="FollowMode" v-show="showResDev">
       {{ userName }}{{ followedUserId }}
-      <Button @handleClick="followUser" title="follow" />
-      <Button @handleClick="unFollowUser" title="unfollow" />
+      <Button class="bg-yellow-300 w-40 h-10 rounded-3xl m-4" @handleClick="followUser" title="follow" />
+      <Button class="bg-yellow-300 w-40 h-10 rounded-3xl m-4" @handleClick="unFollowUser" title="unfollow" />
     </div>
     <div v-else>
       {{ userName }}{{ followedUserId }}
