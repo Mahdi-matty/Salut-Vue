@@ -8,6 +8,7 @@
         placeholder="enter userName" />
         <label class="my-1">password</label>
         <input
+        type="password"
         class="border-blue-50 border-4 p-2 my-4" 
         v-model="password"
         placeholder="enter password"/>

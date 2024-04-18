@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-green">
     <div v-for="message in allMessages" :key="message.id">
         <ul>
             <li>
@@ -11,14 +11,16 @@
     </div>
     <Button @handleClick="handleShowSendForm" title="send a message"/>
     <div v-show="showSendForm">
-        <Seachbar :FollowMode="false" @userInfo="handleUserInfo"/>
-        <from @submit.prevent="handleSendMess">
+        <Searchbar :FollowMode="false" @userInfo="handleUserInfo"/>
+        <form @submit.prevent="handleSendMess">
             <label>text</label>
             <input 
+            class="border-blue-50 border-4 p-2 my-4" 
             type="text"
             v-model="text"
             placeholder="write your message"/>
-        </from>
+            <input class="border-blue-50 border-4 p-2 my-6" type="submit" placeholder="submit"/>
+        </form>
     </div>
   </div>
 </template>
@@ -39,15 +41,16 @@ const handleUserInfo = (userInfo)=>{
 reciverId.value= userInfo.UserId
 }
 const selfUserId = computed(() => store.getters.selfUserId);
+console.log(selfUserId.value)
 const { mutate: sendMess } = useMutation(SEND_MESSAGES);
 const { mutate: sendNot } = useMutation(ADD_Notif);
-const { result: queryResult } = useQuery(QUERY_MESSAGES, ()=>({senderId: selfUserId}));
+const { result: queryResult } = useQuery(QUERY_MESSAGES, ()=>({userId: selfUserId.value}));
 const allMessages = ref([]);
 const handleSendMess = async()=>{
   try{
     const newMsg = await sendMess({
       text :text.value,
-      senderId: selfUserId,
+      senderId: selfUserId.value,
       reciverId: reciverId.value 
     })
     console.log(newMsg)

@@ -14,7 +14,7 @@
           />
           <HeartIcon
           class="w-6 h-6"
-            :class="{ liked: post.liked }"
+            :class="{ liked: post.likes.some(like=> like.userId == selfUserId) }"
             @click="toggleLike(post)"
           />
           <ChatIcon class="2-6 h-6" @click="handleCommentShow"/>
@@ -45,7 +45,7 @@
               />
               <label>image</label>
               <input type="file" @change="handleChange" name="imageSource" />
-              <Button class="bg-yellow-300 w-20 h-10 rounded-3xl m-4" @handleClick="handleUpload" title="upload" />
+              <Button class="bg-yellow-300 w-20 h-10 rounded-3xl m-4"  title="upload" />
               <input type="submit" value="save " />
             </form>
           </div>
@@ -93,7 +93,7 @@ const handleCommentShow = ()=>{
 const handleDeletePost = async (post) => {
   try {
     const { data } = await Deletepost({
-      userId: selfUserId,
+      userId: selfUserId.value,
       id: post.id,
     });
     console.log(data);
@@ -106,12 +106,12 @@ const handleEditPost = (post) => {
   editedPost.title = post.title;
   editedPost.content = post.content;
   editedPost.imageSource = post.imageSource;
-  showEditDev.value = true;
+  showEditDev.value = !showEditDev.value;
 };
 const handleSaveEdit = async () => {
   try {
     const { data } = await EditPost({
-      userId: selfUserId,
+      userId: selfUserId.value,
       id: editedPost.id,
       title: editedPost.title,
       content: editedPost.content,
@@ -127,6 +127,7 @@ const handleSaveEdit = async () => {
   }
 };
 const { result: queryResult } = useQuery(QUERY_POSTS);
+const likedPost = ref(false)
 watchEffect(async () => {
   try {
     if (queryResult.value) {
@@ -138,32 +139,34 @@ watchEffect(async () => {
   }
 });
 
+
 const toggleLike = async (post) => {
   try {
-    const { result } = useQuery(QUERY_LIKES, () => ({ postId: post.id }));
-    const postLikes = await result.likes;
-    const alreadyLiked = postLikes.some(like => like.userId === selfUserId);
-    if (!alreadyLiked) {
+    console.log(post.likes)
+    const alreadyLiked = post.likes.some(like => like.userId === selfUserId);
+    if (!alreadyLiked && post.likes.length == 0) {
       await LikePosts({
         status: "liked",
-        userId: selfUserId,
+        userId: selfUserId.value,
         postId: post.id,
       });
     }else{
       const userLike = postLikes.find(like => like.userId === selfUserId);
       if(userLike){
          await DisLikePosts({
-        userId: selfUserId,
+        userId: selfUserId.value,
         id:userLike.id
       })
-      }
-     
+      }     
     }
-
   } catch (error) {
     console.error("Error toggling like:", error);
   }
 };
 </script>
 
-
+<style scoped>
+.liked {
+color: red;
+}
+</style>
