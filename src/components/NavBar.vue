@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import { RouterLink } from 'vue-router'
 
 </script>
@@ -8,6 +8,8 @@ import { RouterLink } from 'vue-router'
     <div >
         <RouterLink  to="/">Home</RouterLink>
         <RouterLink to="/profile">Profile</RouterLink>
+        <RouterLink  to="/detail/inbox">inbox</RouterLink>
+        <RouterLink  to="/detail/notification">notification</RouterLink>
 
     </div>
   

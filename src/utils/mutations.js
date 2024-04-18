@@ -116,11 +116,8 @@ mutation removeLike( $id: ID!, $userId: ID!){
 export const SEND_MESSAGES = gql`
 mutation sendMessage($text: String!, $senderId: ID!, $reciverId: ID!){
     sendMessage(text: $text, senderId: $senderId, reciverId: $reciverId){
-        newMsg{
-            text,
-            id,
+            text
             reciverId
-        }
     }
 }`
 

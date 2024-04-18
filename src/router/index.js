@@ -15,9 +15,10 @@ const router = createRouter({
       component: () => import('../views/Profile.vue')
     },
     {
-      path: '/notmess',
-      name: 'notification',
-      component: () => import('../views/Detail.vue')
+      path: '/detail/:type',
+      name: 'detail',
+      component: () => import('../views/Detail.vue'),
+      props: true
     }
   ]
 })

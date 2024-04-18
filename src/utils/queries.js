@@ -84,14 +84,14 @@ query getUserStory($userId : ID!) {
 }
 `;
 
-export const QUERY_USER_FOLLOWERS= gql`
+export const QUERY_USER_FOLLOWERS = gql`
 query getUserFollowers($userId : ID!) {
     userFollowers(userId: $userId) {
         username
     }
 }
 `;
-export const QUERY_USER_FOLLOWING= gql`
+export const QUERY_USER_FOLLOWING = gql`
 query getUserFollowing($userId : ID!) {
     userFollowing(userId: $userId) {
         id
@@ -120,14 +120,12 @@ query likes($postId: ID!){
 `;
 
 export const QUERY_MESSAGES = gql`
-query messages($senderId: ID!){
-    messages(senderId: $senderId){
-       messages{
-        id,
-        text,
-        senderId,
+query getMessages($userId: ID!){
+    allMess(userId: $userId){
+        text
+        senderId
         reciverId
-       }
+       
     }
 }
 `;
