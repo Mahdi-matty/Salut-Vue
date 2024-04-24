@@ -14,7 +14,7 @@ const store = useStore();
 const allNotifications = ref([])
 const selfUserId = computed(() => store.getters.selfUserId);
 import { ref, defineEmits, defineProps, watchEffect, computed } from "vue";
-const {result: queryResult } =   useQuery(QUERY_NOTIFICATION, ()=>({userId: selfUserId}))
+const {result: queryResult } =   useQuery(QUERY_NOTIFICATION, ()=>({userId: selfUserId.value}))
 
 watchEffect(async()=>{
 try{

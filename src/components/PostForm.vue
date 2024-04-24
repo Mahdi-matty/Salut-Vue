@@ -28,6 +28,9 @@
 <script setup>
 import Button from "./Button.vue";
 import { ref, defineEmits } from "vue";
+import { UPLOAD_IMAGE} from '../utils/mutations'
+import { useQuery, useMutation } from "@vue/apollo-composable"
+const { mutate: imageUpload } = useMutation(UPLOAD_IMAGE);
 const title = ref( "");
 const content = ref("");
 const selectedFile = ref(null);
@@ -35,7 +38,17 @@ const imageSource = ref("");
 const handleChange = (event) => {
   selectedFile = event.target.files[0];
 };
-const handleUpload = () => {};
+const handleUpload = async (selectedFile) => {
+  try{
+    const {data} = await imageUpload({
+      image: selectedFile
+    })
+    console.log(data)
+    imageSource.value = data.Image
+  }catch(error){
+    console.log(error)
+  }
+};
 const emit = defineEmits(['handleFormRegister'])
 
 const handleSubmit = ()=>{
