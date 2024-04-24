@@ -133,10 +133,8 @@ query getMessages($userId: ID!){
 export const QUERY_NOTIFICATION = gql`
 query userNotif($userId: ID!){
     userNotif(userId: $userId){
-        notifications{
             userId,
             message,
             status
-        }
     }
 }`

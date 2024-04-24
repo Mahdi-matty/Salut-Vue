@@ -129,3 +129,10 @@ mutation addNotif($message: String!, $status: NotificationStatus!, $userId: ID! 
         message
     }
 }`;
+
+export const UPLOAD_IMAGE = gql`
+mutation UploadImage($image: Upload!){
+    uploadImage(image: $image){
+        Image
+    }
+}`
